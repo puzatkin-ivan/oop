@@ -1,0 +1,11 @@
+[Dd]ebug
+.vs
+ReadMe.txt
+*.ipdb
+*.pdb
+*.obj
+*.iobj
+*.vcxproj.user
+*.exp
+*.ilk
+*.lib
