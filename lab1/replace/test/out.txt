@@ -1,0 +1,3 @@
+Returns whether the string is empty
+mama
+123 123 123
