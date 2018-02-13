@@ -1,3 +1,0 @@
-Returns whether the string is empty
-ma
-123 123 123
