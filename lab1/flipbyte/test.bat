@@ -2,28 +2,38 @@ set PROGRAM="%~1"
 
 rem провереяем запуск без параметров командной строки
 %PROGRAM% > out.txt
-IF NOT ERRORLEVEL 1 GOTO error
+if not errorlevel 1 goto error
 
 rem Проверяем запуск с входным и выходным файлом
 %PROGRAM% 256 > out.txt
-IF NOT ERRORLEVEL 1 GOTO error
+if not errorlevel 1 goto error
 
 %PROGRAM% B > %TEMP%/out.txt
-IF NOT ERRORLEVEL 1 GOTO error
+if not errorlevel 1 goto error
 
 %PROGRAM% 128 > out.txt
-IF ERRORLEVEL 1 GOTO error
-FC out.txt result1.txt
-IF ERRORLEVEL 1 GOTO error
+if errorlevel 1 goto error
+fc out.txt result1.txt
+if errorlevel 1 goto error
 
 %PROGRAM% 1 > out.txt
-IF errorlevel 1 goto error
-FC out.txt result128.txt
-IF ERRORLEVEL 1 GOTO error
+if errorlevel 1 goto error
+fc out.txt result128.txt
+if errorlevel 1 goto error
 
-ECHO Program testing succeeded
-EXIT 0
+%PROGRAM% 56 > out.txt
+if errorlevel 1 goto error
+fc out.txt result28.txt
+if errorlevel 1 goto error
+
+%PROGRAM% 154 > out.txt
+if errorlevel 1 goto error
+fc out.txt result89.txt
+if errorlevel 1 goto error
+
+echo Program testing succeeded
+exit 0
 
 :error
-ECHO Test failed
-EXIT 1
+echo Test failed
+exit 1
