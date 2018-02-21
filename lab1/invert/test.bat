@@ -28,6 +28,13 @@ if errorlevel 1 goto error
 fc out.txt inverseMatrix2.txt
 if errorlevel 1 goto error 
 
+rem Повторная проверка с матрицией, определитель которой не равен 0
+%PROGRAM% matrixEgoshin.txt > out.txt
+if errorlevel 1 goto error
+fc out.txt resultEgoshin.txt
+if errorlevel 1 goto error 
+
+
 echo Program testing succeeded
 exit 0
 

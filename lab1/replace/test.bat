@@ -29,6 +29,10 @@ if errorlevel 1 goto error
 fc %TEMP%\out.txt check-by-replay.txt
 if errorlevel 1 goto error
 
+%PROGRAM% replay.txt %TEMP%\out.txt ba mama > log.txt
+if errorlevel 1 goto error
+fc %TEMP%\out.txt noreplace.txt
+if errorlevel 1 goto errors
 
 echo Program testing succeeded
 exit 0
