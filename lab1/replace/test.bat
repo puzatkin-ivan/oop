@@ -12,7 +12,7 @@ if not errorlevel 1 goto error
 if not errorlevel 1 goto error
 
 %PROGRAM% name-list.txt %TEMP%\out.txt "" Arthur > log.txt  
-if not errorlevel 1 goto error
+if errorlevel 1 goto error
 
 %PROGRAM% name-list.txt out.txt Charlotte Anna > log.txt  
 if errorlevel 1 goto error
@@ -30,6 +30,11 @@ fc %TEMP%\out.txt check-by-replay.txt
 if errorlevel 1 goto error
 
 %PROGRAM% replay.txt %TEMP%\out.txt ba mama > log.txt
+if errorlevel 1 goto error
+fc %TEMP%\out.txt noreplace.txt
+if errorlevel 1 goto errors
+
+%PROGRAM% replay.txt %TEMP%\out.txt "" mama > log.txt
 if errorlevel 1 goto error
 fc %TEMP%\out.txt noreplace.txt
 if errorlevel 1 goto errors
