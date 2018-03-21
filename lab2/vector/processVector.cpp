@@ -1,23 +1,25 @@
 #include "stdafx.h"
 #include "processVector.h"
 
-std::vector<double> GetNumbers(std::istream & inputFile)
+std::vector<double> GetNumbers(std::istream& inputFile)
 {
-	return std::vector<double>(std::istream_iterator<double>(inputFile), std::istream_iterator<double>());
+	return std::vector<double>(std::istream_iterator<double>(inputFile),
+		std::istream_iterator<double>());
 }
 
-void PrintNumbers(std::ostream & outputFile, const std::vector<double> & outputVector, unsigned precision)
+void PrintNumbers(std::ostream& outputFile, const std::vector<double>& outputVector, unsigned precision)
 {
 	outputFile << std::fixed << std::setprecision(precision);
-	copy(outputVector.begin(), outputVector.end(), std::ostream_iterator<double>(outputFile, " "));
+	copy(outputVector.begin(), outputVector.end(),
+		std::ostream_iterator<double>(outputFile, " "));
 }
 
-void ProcessVector(std::vector<double> & numbers)
+void ProcessVector(std::vector<double>& numbers)
 {
 	if (!numbers.empty())
 	{
 		auto minElement = *std::min_element(numbers.begin(), numbers.end());
-		
+
 		std::transform(numbers.begin(), numbers.end(), numbers.begin(),
 			[minElement](double number) { return number * minElement; });
 	}
