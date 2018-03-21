@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_SUITE(HtmlDecode_function)
 		auto result = HtmlDecode(input);
 		BOOST_CHECK_EQUAL(expectedResult, result);
 	}
-	BOOST_AUTO_TEST_CASE(decode_all_html_entity)
+	BOOST_AUTO_TEST_CASE(decode_all_html_entities)
 	{
 		std::string input = "&lt;p&gt;The string doesn&apos;t contain &quot;html-entities&quot;&lt;/p&gt;";
 		std::string expectedResult = "<p>The string doesn't contain \"html-entities\"</p>";
