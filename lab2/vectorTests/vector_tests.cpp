@@ -13,7 +13,7 @@ BOOST_AUTO_TEST_SUITE(Vector)
 			std::stringstream inputDoubleNumbers("");
 			auto numbers = GetNumbers(inputDoubleNumbers);
 			std::vector<double> expectedNumbers;
-			BOOST_CHECK_EQUAL(numbers, expectedNumbers);
+			BOOST_CHECK(IsVectorsEqual(numbers, expectedNumbers));
 		}
 		BOOST_AUTO_TEST_CASE(get_double_numbers_from_istream)
 		{
