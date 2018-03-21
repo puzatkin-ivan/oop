@@ -1,16 +1,16 @@
 #include "stdafx.h"
-#include <map>
+#include <array>
 #include "HtmlDecode.h"
 
-using Map = std::map<std::string, std::string>;
+using Map = std::array<std::pair<std::string, std::string>, 5>;
 
-const Map HTML_ENTITIES = {
+const Map HTML_ENTITIES = {{
 	{ "&lt;", "<" },
 	{ "&gt;", ">" },
-	{ "&amp;", "&" },
 	{ "&quot;", "\"" },
-	{ "&apos;", "'" }
-};
+	{ "&apos;", "'" },
+	{ "&amp;", "&" },
+}};
 
 std::string HtmlDecode(const std::string & htmlStr)
 {

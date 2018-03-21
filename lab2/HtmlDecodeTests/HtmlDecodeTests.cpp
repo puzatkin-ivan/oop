@@ -8,6 +8,13 @@ BOOST_AUTO_TEST_SUITE(HtmlDecode_function)
 		auto result = HtmlDecode(input);
 		BOOST_CHECK_EQUAL(input, result);
 	}
+	BOOST_AUTO_TEST_CASE(decode_only_one_html_entity)
+	{
+		std::string input = "&amp;gt;";
+		std::string expectedResult = "&gt;";
+		auto result = HtmlDecode(input);
+		BOOST_CHECK_EQUAL(expectedResult, result);
+	}
 	BOOST_AUTO_TEST_CASE(decode_a_single_html_entity)
 	{
 		std::string input = "The string does contain html-entity 1 &lt; 2";
