@@ -1,9 +1,10 @@
 #include "stdafx.h"
+#include <map>
 #include "HtmlDecode.h"
 
-using Map = std::vector<std::vector<std::string>>;
+using Map = std::map<std::string, std::string>;
 
-const Map HTML_ENTITIES{
+const Map HTML_ENTITIES = {
 	{ "&lt;", "<" },
 	{ "&gt;", ">" },
 	{ "&amp;", "&" },
@@ -17,7 +18,7 @@ std::string HtmlDecode(const std::string & htmlStr)
 	
 	for (auto& entity : HTML_ENTITIES)
 	{
-		resultStr = Replace(resultStr, entity[0], entity[1]);
+		resultStr = Replace(resultStr, entity.first, entity.second);
 	}
 	return resultStr;
 }

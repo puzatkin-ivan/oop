@@ -92,14 +92,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libboost_random-vc141-mt-1_65_1.lib;libboost_regex-vc141-mt-1_65_1.lib;libboost_serialization-vc141-mt-1_65_1.lib;libboost_program_options-vc141-mt-1_65_1.lib;libboost_signals-vc141-mt-1_65_1.lib;libboost_system-vc141-mt-1_65_1.lib;libboost_filesystem-vc141-mt-1_65_1.lib;libboost_unit_test_framework-vc141-mt-1_65_1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>"$(TargetPath)" --log_level=test_suite</Command>
@@ -124,11 +123,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libboost_random-vc141-mt-gd-1_65_1.lib;libboost_regex-vc141-mt-gd-1_65_1.lib;libboost_serialization-vc141-mt-gd-1_65_1.lib;libboost_program_options-vc141-mt-gd-1_65_1.lib;libboost_signals-vc141-mt-gd-1_65_1.lib;libboost_system-vc141-mt-gd-1_65_1.lib;libboost_filesystem-vc141-mt-gd-1_65_1.lib;libboost_unit_test_framework-vc141-mt-gd-1_65_1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>"$(TargetPath)" --log_level=test_suite</Command>
@@ -151,12 +150,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libboost_random-vc141-mt-gd-1_65_1.lib;libboost_regex-vc141-mt-gd-1_65_1.lib;libboost_serialization-vc141-mt-gd-1_65_1.lib;libboost_program_options-vc141-mt-gd-1_65_1.lib;libboost_signals-vc141-mt-gd-1_65_1.lib;libboost_system-vc141-mt-gd-1_65_1.lib;libboost_filesystem-vc141-mt-gd-1_65_1.lib;libboost_unit_test_framework-vc141-mt-gd-1_65_1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>"$(TargetPath)" --log_level=test_suite</Command>
@@ -181,14 +179,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libboost_random-vc141-mt-1_65_1.lib;libboost_regex-vc141-mt-1_65_1.lib;libboost_serialization-vc141-mt-1_65_1.lib;libboost_program_options-vc141-mt-1_65_1.lib;libboost_signals-vc141-mt-1_65_1.lib;libboost_system-vc141-mt-1_65_1.lib;libboost_filesystem-vc141-mt-1_65_1.lib;libboost_unit_test_framework-vc141-mt-1_65_1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>"$(TargetPath)" --log_level=test_suite</Command>
