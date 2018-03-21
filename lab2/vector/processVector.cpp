@@ -14,13 +14,11 @@ void PrintNumbers(std::ostream & outputFile, const std::vector<double> & outputV
 
 void ProcessVector(std::vector<double> & numbers)
 {
-	if (numbers.size() > 1)
+	if (!numbers.empty())
 	{
 		auto minElement = *std::min_element(numbers.begin(), numbers.end());
-		if (minElement != 0)
-		{
-			std::transform(numbers.begin(), numbers.end(), numbers.begin(),
-				[minElement](double number) { return number * minElement; });
-		}
+		
+		std::transform(numbers.begin(), numbers.end(), numbers.begin(),
+			[minElement](double number) { return number * minElement; });
 	}
 }

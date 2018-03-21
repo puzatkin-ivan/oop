@@ -34,14 +34,14 @@ BOOST_AUTO_TEST_SUITE(Vector)
 		BOOST_AUTO_TEST_CASE(does_no_change_vector_containing_zero)
 		{
 			std::vector<double> numbers = { 0, 1, 2, 3, 4, 5 };
-			auto expectedNumbers(numbers);
+			std::vector<double> expectedNumbers = { 0, 0, 0, 0, 0, 0 };
 			ProcessVector(numbers);
 			BOOST_CHECK(IsVectorsEqual(numbers, expectedNumbers));
 		}
-		BOOST_AUTO_TEST_CASE(does_no_change_vector_containing_a_single_element)
+		BOOST_AUTO_TEST_CASE(does_change_vector_containing_a_single_element)
 		{
-			std::vector<double> numbers = { 1 };
-			auto expectedNumbers(numbers);
+			std::vector<double> numbers = { 2 };
+			std::vector<double> expectedNumbers = { 2 * 2 };
 			ProcessVector(numbers);
 			BOOST_CHECK(IsVectorsEqual(numbers, expectedNumbers));
 		}
