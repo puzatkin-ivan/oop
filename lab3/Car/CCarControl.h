@@ -12,8 +12,10 @@ public:
 	bool HandleCommand();
 private:
 	bool Info(std::istream & input);
+	bool EngineOn(std::istream & input);
+	bool EngineOff(std::istream & input);
 	CCar & m_car;
 	std::istream & m_input;
 	std::ostream & m_output;
-	const ActionMap m_actionMap;
+	ActionMap m_actionMap;
 };

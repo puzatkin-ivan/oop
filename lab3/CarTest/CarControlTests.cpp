@@ -43,4 +43,28 @@ BOOST_FIXTURE_TEST_SUITE(Car_Control, CarContolFixture)
 		BOOST_CHECK(car.SetSpeed(10));
 		VerifyCommandHandling("Info", "Engine is turned on\nGear is 1\nDirection is 1\nSpeed is 10\n");
 	}
+	BOOST_AUTO_TEST_CASE(can_handle_EngineOn_command)
+	{
+		BOOST_CHECK(!car.IsEngineTurnOn());
+		VerifyCommandHandling("EngineOn", "Engine was turned on\n");
+
+		BOOST_CHECK(car.IsEngineTurnOn());
+		VerifyCommandHandling("EngineOn", "Engine is already turned on\n");
+	}
+	BOOST_AUTO_TEST_CASE(can_handle_EngineOff_command)
+	{
+		BOOST_CHECK(car.TurnOnEngine());
+		BOOST_CHECK(car.IsEngineTurnOn());
+		BOOST_CHECK(car.SetGear(Gear::First));
+		BOOST_CHECK(car.SetSpeed(10));
+		VerifyCommandHandling("EngineOff", "Engine was not turned off\n");
+
+		BOOST_CHECK(car.SetGear(Gear::Neutral));
+		BOOST_CHECK(car.SetSpeed(0));
+		BOOST_CHECK(car.IsEngineTurnOn());
+		VerifyCommandHandling("EngineOff", "Engine was turned off\n");
+
+		BOOST_CHECK(!car.IsEngineTurnOn());
+		VerifyCommandHandling("EngineOff", "Engine is already turned off\n");
+	}
 BOOST_AUTO_TEST_SUITE_END()
