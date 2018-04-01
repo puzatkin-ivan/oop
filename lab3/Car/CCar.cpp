@@ -6,7 +6,6 @@ CCar::CCar()
 {
 	m_isEngineTurnOn = false;
 	m_speed = 0;
-	m_direction = Direction::None;
 	m_gear = Gear::Neutral;
 }
 
@@ -28,7 +27,7 @@ bool CCar::TurnOnEngine()
 
 bool CCar::TurnOffEngine()
 {
-	if (!m_isEngineTurnOn || GetSpeed() != 0 || GetGear() != Gear::Neutral)
+	if (!m_isEngineTurnOn || (m_speed != 0 && m_gear != Gear::Neutral))
 	{
 		return false;
 	}
@@ -39,7 +38,17 @@ bool CCar::TurnOffEngine()
 
 Direction CCar::GetDirection() const
 {
-	return m_direction;
+	auto gear = static_cast<int>(m_gear);
+	int movement = gear * m_speed;
+	if (movement > 0)
+	{
+		return Direction::Forward;
+	}
+	else if (movement == 0 && m_speed == 0)
+	{
+		return Direction::None;
+	}
+	return Direction::Reverse;
 }
 
 unsigned CCar::GetSpeed() const
@@ -49,7 +58,7 @@ unsigned CCar::GetSpeed() const
 
 bool CCar::SetSpeed(unsigned speed)
 {
-	if (m_gear == Gear::Neutral && speed >= GetSpeed())
+	if (m_gear == Gear::Neutral && speed >= m_speed)
 	{
 		return false;
 	}
@@ -70,30 +79,28 @@ bool CCar::SetGear(const Gear & gear)
 {
 	if (m_isEngineTurnOn)
 	{
-		return (m_speed == 0) ? IsChangesGearWithReverse(gear) : IsChangesGearWithoutReverse(gear);
+		return (m_speed == 0 && m_gear == Gear::Neutral) ? ChangeGearWithReverseGear(gear) : ChangeGearWithoutReverseGear(gear);
 	}
 	
 	return false;
 }
 
-bool CCar::IsChangesGearWithReverse(const Gear & gear)
+bool CCar::ChangeGearWithReverseGear(const Gear & gear)
 {
 	if (gear <= Gear::First)
 	{
 		m_gear = gear;
-		m_direction = SetDirection(gear);
 		return true;
 	}
 	return false;
 }
 
-bool CCar::IsChangesGearWithoutReverse(const Gear & gear)
+bool CCar::ChangeGearWithoutReverseGear(const Gear & gear)
 {
 	if (gear >= Gear::Neutral)
 	{
 		if (IsSpeedInSpeedRange(m_speed, GetSpeedRange(gear)))
 		{
-			m_direction = Direction::Forward;
 			m_gear = gear;
 			return true;
 		}
@@ -101,31 +108,14 @@ bool CCar::IsChangesGearWithoutReverse(const Gear & gear)
 	return false;
 }
 
-bool CCar::IsSpeedInSpeedRange(unsigned speed, const SpeedRange & range)
+bool CCar::IsSpeedInSpeedRange(unsigned speed, const SpeedRange & range) const
 {
 	return (speed >= range.first && speed <= range.second);
-}
+}	
 
-SpeedRange CCar::GetSpeedRange(const Gear & gear)
+SpeedRange CCar::GetSpeedRange(const Gear & gear) const
 {
+	extern const std::map<Gear, SpeedRange> MapSpeed;
 	auto it = MapSpeed.find(gear);
 	return it->second;
-}
-
-Direction CCar::SetDirection(const Gear & gear)
-{
-	auto numberGear = static_cast<int>(gear);
-	if (numberGear > 0)
-	{
-		return Direction::Forward;
-	}
-	else if (numberGear < 0)
-	{
-		return Direction::Reverse;
-	}
-	else if (m_speed == 0)
-	{
-		return Direction::None;
-	}
-	return m_direction;
 }

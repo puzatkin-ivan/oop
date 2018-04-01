@@ -61,29 +61,30 @@ BOOST_FIXTURE_TEST_SUITE(Car, CarFixture)
 		{
 			BOOST_CHECK(car.GetGear() == Gear::Neutral);
 
+			BOOST_CHECK(!car.SetGear(Gear::Second));
 			BOOST_CHECK(car.SetGear(Gear::First));
 			BOOST_CHECK(car.GetGear() == Gear::First);
 
-			BOOST_CHECK(car.SetGear(Gear::Reverse));
+			BOOST_CHECK(!car.SetGear(Gear::Reverse));
 			BOOST_CHECK(!car.SetGear(Gear::Second));
 		}
-		BOOST_AUTO_TEST_CASE(can_changes_speed_in_speed_range)
+		BOOST_AUTO_TEST_CASE(can_change_speed_in_speed_range)
 		{
 			BOOST_CHECK(car.SetGear(Gear::First));
 			BOOST_CHECK(car.SetSpeed(30));
 
-			BOOST_CHECK(!car.SetSpeed(50));
+			BOOST_CHECK(!car.SetSpeed(31));
 			BOOST_CHECK_EQUAL(car.GetSpeed(), 30);
 
 			BOOST_CHECK(car.SetGear(Gear::Neutral));
-			BOOST_CHECK(!car.SetSpeed(50));
+			BOOST_CHECK(!car.SetSpeed(31));
 			BOOST_CHECK_EQUAL(car.GetSpeed(), 30);
 		}
 		BOOST_AUTO_TEST_CASE(cannot_turn_on_reverse_gear_on_while_driving)
 		{
 			BOOST_CHECK(car.SetGear(Gear::Reverse));
-			BOOST_CHECK(car.GetDirection() == Direction::Reverse);
 			BOOST_CHECK(car.SetSpeed(10));
+			BOOST_CHECK(car.GetDirection() == Direction::Reverse);
 			BOOST_CHECK(car.SetGear(Gear::Neutral));
 			BOOST_CHECK(!car.SetGear(Gear::Reverse));
 		}

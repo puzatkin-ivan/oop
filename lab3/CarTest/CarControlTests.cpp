@@ -67,4 +67,21 @@ BOOST_FIXTURE_TEST_SUITE(Car_Control, CarContolFixture)
 		BOOST_CHECK(!car.IsEngineTurnOn());
 		VerifyCommandHandling("EngineOff", "Engine is already turned off\n");
 	}
+	BOOST_AUTO_TEST_CASE(can_handle_SetGear_command)
+	{
+		BOOST_CHECK(!car.IsEngineTurnOn());
+		VerifyCommandHandling("SetGear", "Error: Engine was not turned on\n");
+
+		BOOST_CHECK(car.TurnOnEngine());
+		VerifyCommandHandling("SetGear 1", "Gear was change\n");		
+
+		VerifyCommandHandling("SetGear 4", "Gear outside Speed Range\n");
+	}
+	BOOST_AUTO_TEST_CASE(cand_handle_SetSpeed_command)
+	{
+		BOOST_CHECK(car.TurnOnEngine());
+		BOOST_CHECK(car.SetGear(Gear::First));
+		VerifyCommandHandling("SetSpeed", "Error: Invalid value\n");
+		VerifyCommandHandling("SetSpeed 10", "Speed was change\n");
+	}
 BOOST_AUTO_TEST_SUITE_END()
