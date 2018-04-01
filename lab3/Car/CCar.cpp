@@ -27,7 +27,7 @@ bool CCar::TurnOnEngine()
 
 bool CCar::TurnOffEngine()
 {
-	if (!m_isEngineTurnOn || (m_speed != 0 && m_gear != Gear::Neutral))
+	if (!m_isEngineTurnOn || m_speed != 0 || m_gear != Gear::Neutral)
 	{
 		return false;
 	}
