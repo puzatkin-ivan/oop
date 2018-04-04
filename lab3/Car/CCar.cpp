@@ -79,7 +79,11 @@ bool CCar::SetGear(const Gear & gear)
 {
 	if (m_isEngineTurnOn)
 	{
-		return (m_speed == 0 && m_gear == Gear::Neutral) ? ChangeGearWithReverseGear(gear) : ChangeGearWithoutReverseGear(gear);
+		if (m_speed == 0 && m_gear == Gear::Neutral)
+		{
+			return ChangeGearWithReverseGear(gear);
+		}
+		return ChangeGearWithoutReverseGear(gear);
 	}
 	
 	return false;
@@ -97,13 +101,10 @@ bool CCar::ChangeGearWithReverseGear(const Gear & gear)
 
 bool CCar::ChangeGearWithoutReverseGear(const Gear & gear)
 {
-	if (gear >= Gear::Neutral)
+	if (gear >= Gear::Neutral && IsSpeedInSpeedRange(m_speed, GetSpeedRange(gear)))
 	{
-		if (IsSpeedInSpeedRange(m_speed, GetSpeedRange(gear)))
-		{
-			m_gear = gear;
-			return true;
-		}
+		m_gear = gear;
+		return true;
 	}
 	return false;
 }
