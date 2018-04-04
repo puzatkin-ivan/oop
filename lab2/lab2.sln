@@ -11,10 +11,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HtmlDecode", "HtmlDecode\Ht
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HtmlDecodeTests", "HtmlDecodeTests\HtmlDecodeTests.vcxproj", "{C74F4500-8338-495F-ACF8-D4D404FEE82B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dictionary", "dictionary\dictionary.vcxproj", "{9A8C9CAA-1908-4C84-AA23-EE56C976990B}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dictonaryTests", "dictonaryTests\dictonaryTests.vcxproj", "{1B308523-1085-4719-A6A2-EBB55A36498A}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PrimeNumbers", "PrimeNumbers\PrimeNumbers.vcxproj", "{487DBC5F-B837-4035-B045-6C457016A7A0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PrimeNumbersTests", "PrimeNumbersTests\PrimeNumbersTests.vcxproj", "{354392AC-5DA6-44E6-91F8-F835A18EB7A5}"
@@ -59,22 +55,6 @@ Global
 		{C74F4500-8338-495F-ACF8-D4D404FEE82B}.Release|x64.Build.0 = Release|x64
 		{C74F4500-8338-495F-ACF8-D4D404FEE82B}.Release|x86.ActiveCfg = Release|Win32
 		{C74F4500-8338-495F-ACF8-D4D404FEE82B}.Release|x86.Build.0 = Release|Win32
-		{9A8C9CAA-1908-4C84-AA23-EE56C976990B}.Debug|x64.ActiveCfg = Debug|x64
-		{9A8C9CAA-1908-4C84-AA23-EE56C976990B}.Debug|x64.Build.0 = Debug|x64
-		{9A8C9CAA-1908-4C84-AA23-EE56C976990B}.Debug|x86.ActiveCfg = Debug|Win32
-		{9A8C9CAA-1908-4C84-AA23-EE56C976990B}.Debug|x86.Build.0 = Debug|Win32
-		{9A8C9CAA-1908-4C84-AA23-EE56C976990B}.Release|x64.ActiveCfg = Release|x64
-		{9A8C9CAA-1908-4C84-AA23-EE56C976990B}.Release|x64.Build.0 = Release|x64
-		{9A8C9CAA-1908-4C84-AA23-EE56C976990B}.Release|x86.ActiveCfg = Release|Win32
-		{9A8C9CAA-1908-4C84-AA23-EE56C976990B}.Release|x86.Build.0 = Release|Win32
-		{1B308523-1085-4719-A6A2-EBB55A36498A}.Debug|x64.ActiveCfg = Debug|x64
-		{1B308523-1085-4719-A6A2-EBB55A36498A}.Debug|x64.Build.0 = Debug|x64
-		{1B308523-1085-4719-A6A2-EBB55A36498A}.Debug|x86.ActiveCfg = Debug|Win32
-		{1B308523-1085-4719-A6A2-EBB55A36498A}.Debug|x86.Build.0 = Debug|Win32
-		{1B308523-1085-4719-A6A2-EBB55A36498A}.Release|x64.ActiveCfg = Release|x64
-		{1B308523-1085-4719-A6A2-EBB55A36498A}.Release|x64.Build.0 = Release|x64
-		{1B308523-1085-4719-A6A2-EBB55A36498A}.Release|x86.ActiveCfg = Release|Win32
-		{1B308523-1085-4719-A6A2-EBB55A36498A}.Release|x86.Build.0 = Release|Win32
 		{487DBC5F-B837-4035-B045-6C457016A7A0}.Debug|x64.ActiveCfg = Debug|x64
 		{487DBC5F-B837-4035-B045-6C457016A7A0}.Debug|x64.Build.0 = Debug|x64
 		{487DBC5F-B837-4035-B045-6C457016A7A0}.Debug|x86.ActiveCfg = Debug|Win32

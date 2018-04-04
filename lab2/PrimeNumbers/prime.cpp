@@ -7,8 +7,15 @@ std::set<int> GeneratePrimeNumbersSet(int upperBound)
 	{
 		return std::set<int>();
 	}
+	auto sieve = InitVectorPrimes(upperBound);
+
+	return GeneratePrimeNumbersSetFromVector(sieve);
+}
+
+std::vector<bool> InitVectorPrimes(int upperBound)
+{
 	std::vector<bool> sieve(upperBound + 1, true);
-	for (size_t i = 2; i * i <= upperBound; ++i)
+	for (size_t i = 2; i * i <= sieve.size(); ++i)
 	{
 		if (sieve[i])
 		{
@@ -18,7 +25,11 @@ std::set<int> GeneratePrimeNumbersSet(int upperBound)
 			}
 		}
 	}
-	
+	return sieve;
+}
+
+std::set<int> GeneratePrimeNumbersSetFromVector(const std::vector<bool> & sieve)
+{
 	std::set<int> primeNumbers;
 	for (size_t index = 2; index < sieve.size(); ++index)
 	{

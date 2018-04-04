@@ -77,7 +77,7 @@ BOOST_FIXTURE_TEST_SUITE(Car_Control, CarContolFixture)
 
 		VerifyCommandHandling("SetGear 4", "Gear outside Speed Range\n");
 	}
-	BOOST_AUTO_TEST_CASE(cand_handle_SetSpeed_command)
+	BOOST_AUTO_TEST_CASE(can_handle_SetSpeed_command)
 	{
 		BOOST_CHECK(car.TurnOnEngine());
 		BOOST_CHECK(car.SetGear(Gear::First));
