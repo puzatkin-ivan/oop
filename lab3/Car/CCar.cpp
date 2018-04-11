@@ -2,11 +2,21 @@
 
 #include "CCar.h"
 
+static const std::map<Gear, SpeedRange> MapSpeed = {
+	{ Gear::Reverse, { 0, 20 } },
+	{ Gear::Neutral, { 0, 150 } },
+	{ Gear::First, { 0, 30 } },
+	{ Gear::Second, { 20, 50 } },
+	{ Gear::Third, { 30, 60 } },
+	{ Gear::Fourth, { 40, 90 } },
+	{ Gear::Fifth, { 50, 150 } },
+};
+
 CCar::CCar()
+	: m_isEngineTurnOn(false)
+	, m_speed(0)
+	, m_gear(Gear::Neutral)
 {
-	m_isEngineTurnOn = false;
-	m_speed = 0;
-	m_gear = Gear::Neutral;
 }
 
 bool CCar::IsEngineTurnOn() const
@@ -22,7 +32,7 @@ bool CCar::TurnOnEngine()
 	}
 
 	m_isEngineTurnOn = true;
-	return true;	
+	return true;
 }
 
 bool CCar::TurnOffEngine()
@@ -38,33 +48,38 @@ bool CCar::TurnOffEngine()
 
 Direction CCar::GetDirection() const
 {
-	auto gear = static_cast<int>(m_gear);
-	int movement = gear * m_speed;
-	if (movement > 0)
+	if (m_speed > 0)
 	{
 		return Direction::Forward;
 	}
-	else if (movement == 0 && m_speed == 0)
+	else if (m_speed < 0)
 	{
-		return Direction::None;
+		return Direction::Reverse;
 	}
-	return Direction::Reverse;
+	return Direction::None;
 }
 
-unsigned CCar::GetSpeed() const
+int CCar::GetSpeed() const
 {
-	return m_speed;
+	return std::abs(m_speed);
 }
 
-bool CCar::SetSpeed(unsigned speed)
+bool CCar::SetSpeed(int speed)
 {
-	if (m_gear == Gear::Neutral && speed >= m_speed)
+	if (m_gear == Gear::Neutral && speed >= std::abs(m_speed))
 	{
 		return false;
 	}
 	if (IsSpeedInSpeedRange(speed, GetSpeedRange(m_gear)))
 	{
-		m_speed = speed;
+		if (m_gear == Gear::Reverse || m_speed < 0)
+		{
+			m_speed = -speed;
+		}
+		else
+		{
+			m_speed = speed;
+		}
 		return true;
 	}
 	return false;
@@ -75,46 +90,35 @@ Gear CCar::GetGear() const
 	return m_gear;
 }
 
-bool CCar::SetGear(const Gear & gear)
+bool CCar::SetGear(const Gear& gear)
 {
 	if (m_isEngineTurnOn)
 	{
-		if (m_speed == 0 && m_gear == Gear::Neutral)
+		if (gear == Gear::Reverse)
 		{
-			return ChangeGearWithReverseGear(gear);
+			if (m_gear == Gear::Neutral && std::abs(m_speed) == 0)
+			{
+				m_gear = gear;
+				return true;
+			}
 		}
-		return ChangeGearWithoutReverseGear(gear);
+		else if (IsSpeedInSpeedRange(m_speed, GetSpeedRange(gear)))
+		{
+			m_gear = gear;
+			return true;
+		}
 	}
-	
+
 	return false;
 }
 
-bool CCar::ChangeGearWithReverseGear(const Gear & gear)
+bool CCar::IsSpeedInSpeedRange(int speed, const SpeedRange& range)
 {
-	if (gear <= Gear::First)
-	{
-		m_gear = gear;
-		return true;
-	}
-	return false;
-}
-
-bool CCar::ChangeGearWithoutReverseGear(const Gear & gear)
-{
-	if (gear >= Gear::Neutral && IsSpeedInSpeedRange(m_speed, GetSpeedRange(gear)))
-	{
-		m_gear = gear;
-		return true;
-	}
-	return false;
-}
-
-bool CCar::IsSpeedInSpeedRange(unsigned speed, const SpeedRange & range) const
-{
+	speed = std::abs(speed);
 	return (speed >= range.first && speed <= range.second);
-}	
+}
 
-SpeedRange CCar::GetSpeedRange(const Gear & gear) const
+SpeedRange CCar::GetSpeedRange(const Gear& gear) const
 {
 	extern const std::map<Gear, SpeedRange> MapSpeed;
 	auto it = MapSpeed.find(gear);

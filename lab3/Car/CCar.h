@@ -1,5 +1,26 @@
 #pragma once
-#include "sheet.h"
+#include <map>
+#include <utility>
+
+using SpeedRange = std::pair<int, int>;
+
+enum class Direction
+{
+	Reverse = -1,
+	None = 0,
+	Forward,
+};
+
+enum class Gear
+{
+	Reverse = -1,
+	Neutral = 0,
+	First,
+	Second,
+	Third,
+	Fourth,
+	Fifth,
+};
 
 class CCar
 {
@@ -11,18 +32,16 @@ public:
 
 	Direction GetDirection() const;
 
-	unsigned GetSpeed() const;
-	bool SetSpeed(unsigned speed);
+	int GetSpeed() const;
+	bool SetSpeed(int speed);
 
 	Gear GetGear() const;
 	bool SetGear(const Gear & gear);
 private:
-	bool IsSpeedInSpeedRange(unsigned speed, const SpeedRange & range) const;
+	static bool IsSpeedInSpeedRange(int speed, const SpeedRange & range);
 	SpeedRange GetSpeedRange(const Gear & gear) const;
-	bool ChangeGearWithReverseGear(const Gear & gear);
-	bool ChangeGearWithoutReverseGear(const Gear & gear);
 
 	bool m_isEngineTurnOn;
-	unsigned m_speed;
+	int m_speed;
 	Gear m_gear;
 };
