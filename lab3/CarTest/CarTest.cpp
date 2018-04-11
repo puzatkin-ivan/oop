@@ -28,7 +28,7 @@ BOOST_FIXTURE_TEST_SUITE(Car, CarFixture)
 	BOOST_AUTO_TEST_SUITE(when_enigne_is_turn_off)
 		BOOST_AUTO_TEST_CASE(cannot_turn_off_engine_twice)
 		{
-		BOOST_CHECK(!car.TurnOffEngine());
+			BOOST_CHECK(!car.TurnOffEngine());
 		}
 		BOOST_AUTO_TEST_CASE(cannot_change_gear)
 		{
