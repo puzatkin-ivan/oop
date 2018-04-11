@@ -13,7 +13,7 @@ static const std::map<Gear, SpeedRange> MapSpeed = {
 };
 
 CCar::CCar()
-	: m_isEngineTurnOn(false)
+	: m_isEngineTurnedOn(false)
 	, m_speed(0)
 	, m_gear(Gear::Neutral)
 {
@@ -21,28 +21,28 @@ CCar::CCar()
 
 bool CCar::IsEngineTurnOn() const
 {
-	return m_isEngineTurnOn;
+	return m_isEngineTurnedOn;
 }
 
 bool CCar::TurnOnEngine()
 {
-	if (m_isEngineTurnOn)
+	if (m_isEngineTurnedOn)
 	{
 		return false;
 	}
 
-	m_isEngineTurnOn = true;
+	m_isEngineTurnedOn = true;
 	return true;
 }
 
 bool CCar::TurnOffEngine()
 {
-	if (!m_isEngineTurnOn || m_speed != 0 || m_gear != Gear::Neutral)
+	if (!m_isEngineTurnedOn || m_speed != 0 || m_gear != Gear::Neutral)
 	{
 		return false;
 	}
 
-	m_isEngineTurnOn = false;
+	m_isEngineTurnedOn = false;
 	return true;
 }
 
@@ -90,9 +90,9 @@ Gear CCar::GetGear() const
 	return m_gear;
 }
 
-bool CCar::SetGear(const Gear& gear)
+bool CCar::SetGear(Gear gear)
 {
-	if (m_isEngineTurnOn)
+	if (m_isEngineTurnedOn)
 	{
 		if (gear == Gear::Reverse)
 		{
@@ -112,15 +112,14 @@ bool CCar::SetGear(const Gear& gear)
 	return false;
 }
 
-bool CCar::IsSpeedInSpeedRange(int speed, const SpeedRange& range)
+bool CCar::IsSpeedInSpeedRange(int speed, SpeedRange range)
 {
 	speed = std::abs(speed);
 	return (speed >= range.first && speed <= range.second);
 }
 
-SpeedRange CCar::GetSpeedRange(const Gear& gear) const
+SpeedRange CCar::GetSpeedRange(Gear gear) const
 {
-	extern const std::map<Gear, SpeedRange> MapSpeed;
 	auto it = MapSpeed.find(gear);
 	return it->second;
 }

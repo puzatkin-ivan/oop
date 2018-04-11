@@ -24,7 +24,7 @@
     <ClInclude Include="CCar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CCarControl.h">
+    <ClInclude Include="CCarController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClCompile Include="CCar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CCarControl.cpp">
+    <ClCompile Include="CCarController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

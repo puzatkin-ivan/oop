@@ -4,7 +4,6 @@
 
 struct CarFixture
 {
-public:
 	CCar car;
 };
 

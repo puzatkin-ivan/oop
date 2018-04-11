@@ -24,7 +24,7 @@
     <ClInclude Include="..\Car\CCar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Car\CCarControl.h">
+    <ClInclude Include="..\Car\CCarController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClCompile Include="CarControlTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Car\CCarControl.cpp">
+    <ClCompile Include="..\Car\CCarController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

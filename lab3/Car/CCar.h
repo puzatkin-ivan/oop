@@ -36,12 +36,12 @@ public:
 	bool SetSpeed(int speed);
 
 	Gear GetGear() const;
-	bool SetGear(const Gear & gear);
+	bool SetGear(Gear gear);
 private:
-	static bool IsSpeedInSpeedRange(int speed, const SpeedRange & range);
-	SpeedRange GetSpeedRange(const Gear & gear) const;
+	static bool IsSpeedInSpeedRange(int speed, SpeedRange range);
+	SpeedRange GetSpeedRange(Gear gear) const;
 
-	bool m_isEngineTurnOn;
+	bool m_isEngineTurnedOn;
 	int m_speed;
 	Gear m_gear;
 };
