@@ -66,23 +66,18 @@ int CCar::GetSpeed() const
 
 bool CCar::SetSpeed(int speed)
 {
-	if (m_gear == Gear::Neutral && speed >= std::abs(m_speed))
+	bool isGearNeutral = (m_gear == Gear::Neutral && speed >= std::abs(m_speed));
+	bool isSpeedOutOfRange = (IsSpeedInSpeedRange(speed, GetSpeedRange(m_gear)));
+
+	if (isGearNeutral || !isSpeedOutOfRange)
 	{
 		return false;
 	}
-	if (IsSpeedInSpeedRange(speed, GetSpeedRange(m_gear)))
-	{
-		if (m_gear == Gear::Reverse || m_speed < 0)
-		{
-			m_speed = -speed;
-		}
-		else
-		{
-			m_speed = speed;
-		}
-		return true;
-	}
-	return false;
+
+	bool isSpeedCanChange = (m_gear == Gear::Reverse || m_speed < 0);
+
+	m_speed = (isSpeedCanChange) ? -speed : speed;
+	return true;
 }
 
 Gear CCar::GetGear() const
@@ -92,24 +87,18 @@ Gear CCar::GetGear() const
 
 bool CCar::SetGear(Gear gear)
 {
-	if (m_isEngineTurnedOn)
+	bool isGearOutOfRange = gear < Gear::Reverse || gear > Gear::Fifth;
+	bool isDrivingReverse = GetDirection() == Direction::Reverse && gear != Gear::Neutral && m_gear != Gear::Reverse;
+	bool isDrivingForward = GetDirection() == Direction::Forward && gear == Gear::Reverse;
+	bool isSpeedInRange = IsSpeedInSpeedRange(m_speed, GetSpeedRange(gear));
+
+	if (!m_isEngineTurnedOn || isGearOutOfRange || isDrivingReverse || isDrivingForward || !isSpeedInRange)
 	{
-		if (gear == Gear::Reverse)
-		{
-			if (m_gear == Gear::Neutral && std::abs(m_speed) == 0)
-			{
-				m_gear = gear;
-				return true;
-			}
-		}
-		else if (IsSpeedInSpeedRange(m_speed, GetSpeedRange(gear)))
-		{
-			m_gear = gear;
-			return true;
-		}
+		return false;
 	}
 
-	return false;
+	m_gear = gear;
+	return true;
 }
 
 bool CCar::IsSpeedInSpeedRange(int speed, SpeedRange range)

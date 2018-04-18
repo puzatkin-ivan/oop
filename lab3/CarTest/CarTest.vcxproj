@@ -179,7 +179,7 @@
   <ItemGroup>
     <ClCompile Include="..\Car\CCar.cpp" />
     <ClCompile Include="..\Car\CCarController.cpp" />
-    <ClCompile Include="CarControlTests.cpp" />
+    <ClCompile Include="CarControllerTests.cpp" />
     <ClCompile Include="CarTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">

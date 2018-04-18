@@ -41,10 +41,10 @@
     <ClCompile Include="CarTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CarControlTests.cpp">
+    <ClCompile Include="..\Car\CCarController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Car\CCarController.cpp">
+    <ClCompile Include="CarControllerTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

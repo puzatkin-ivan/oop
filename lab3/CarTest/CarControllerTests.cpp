@@ -2,18 +2,18 @@
 #include "../Car/CCar.h"
 #include "../Car/CCarController.h"
 
-struct CarControlDependencies
+struct CarControllerDependencies
 {
 	CCar car;
 	std::stringstream input;
 	std::stringstream output;
 };
 
-struct CarContolFixture : CarControlDependencies
+struct CarContollerFixture : CarControllerDependencies
 {
 	CCarController carControl;
 
-	CarContolFixture()
+	CarContollerFixture()
 		: carControl(car, input, output)
 	{
 	}
@@ -29,7 +29,7 @@ struct CarContolFixture : CarControlDependencies
 	}
 };
 
-BOOST_FIXTURE_TEST_SUITE(Car_Control, CarContolFixture)
+BOOST_FIXTURE_TEST_SUITE(Car_Controller, CarContollerFixture)
 	BOOST_AUTO_TEST_CASE(can_give_information_about_car_which_is_set_by_default)
 	{
 		VerifyCommandHandling("Info", "Engine is turned off\nGear is 0\nDirection is 0\nSpeed is 0\n");
@@ -57,7 +57,7 @@ BOOST_FIXTURE_TEST_SUITE(Car_Control, CarContolFixture)
 		}
 
 	BOOST_AUTO_TEST_SUITE_END()
-	struct when_engine_turned_on_ : CarContolFixture
+	struct when_engine_turned_on_ : CarContollerFixture
 	{
 		when_engine_turned_on_()
 		{
@@ -78,10 +78,10 @@ BOOST_FIXTURE_TEST_SUITE(Car_Control, CarContolFixture)
 			VerifyCommandHandling("SetGear -1", "Gear was change\n");
 			VerifyCommandHandling("SetGear 1", "Gear was change\n");
 		}
-		BOOST_AUTO_TEST_CASE(cannot_change_gear_from_first_to_reverse_at_zero_speed)
+		BOOST_AUTO_TEST_CASE(can_change_gear_from_first_to_reverse_at_zero_speed)
 		{
 			VerifyCommandHandling("SetGear 1", "Gear was change\n");
-			VerifyCommandHandling("SetGear -1", "Gear wasn't change\n");
+			VerifyCommandHandling("SetGear -1", "Gear was change\n");
 		}
 		BOOST_AUTO_TEST_CASE(cannot_change_speed_up_on_neutral_gear)
 		{
