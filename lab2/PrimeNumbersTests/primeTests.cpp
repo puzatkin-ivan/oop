@@ -45,7 +45,6 @@ BOOST_AUTO_TEST_SUITE(Prime_Numbers)
 		auto sieve = GeneratePrimeNumbersSet(MAX_UPPER_BOUND);
 		std::chrono::time_point<std::chrono::system_clock> end = std::chrono::system_clock::now();
 		auto deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-		std::cout << deltaTime << std::endl;
 		BOOST_CHECK_EQUAL(ESTIMATED_SIZE, sieve.size());
 		BOOST_CHECK(deltaTime <= MAX_EXECUTION_TIME);
 	}
