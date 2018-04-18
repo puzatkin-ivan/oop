@@ -87,12 +87,15 @@ Gear CCar::GetGear() const
 
 bool CCar::SetGear(Gear gear)
 {
-	bool isGearOutOfRange = gear < Gear::Reverse || gear > Gear::Fifth;
-	bool isDrivingReverse = GetDirection() == Direction::Reverse && gear != Gear::Neutral && m_gear != Gear::Reverse;
-	bool isDrivingForward = GetDirection() == Direction::Forward && gear == Gear::Reverse;
-	bool isSpeedInRange = IsSpeedInSpeedRange(m_speed, GetSpeedRange(gear));
-
-	if (!m_isEngineTurnedOn || isGearOutOfRange || isDrivingReverse || isDrivingForward || !isSpeedInRange)
+	const bool isGearOutOfRange = gear < Gear::Reverse || gear > Gear::Fifth;
+	const auto currentDirection = GetDirection();
+	const bool notAllowSetGearReverseWhenDrivingReverse = currentDirection == Direction::Reverse 
+		&& gear != Gear::Neutral && m_gear != Gear::Reverse;
+	const bool notAllowSetGearReverseWhenDrivingForward = currentDirection == Direction::Forward && gear == Gear::Reverse;
+	const bool isSpeedInRange = IsSpeedInSpeedRange(m_speed, GetSpeedRange(gear));
+	
+	if (!m_isEngineTurnedOn || isGearOutOfRange || notAllowSetGearReverseWhenDrivingReverse
+		|| notAllowSetGearReverseWhenDrivingForward || !isSpeedInRange)
 	{
 		return false;
 	}

@@ -2,11 +2,21 @@
 
 #include "../Car/CCar.h"
 
-
-
 struct CarFixture
 {
 	CCar car;
+
+	void VerifyTurnOnGear(Gear currentGear, Gear expectedGear, bool successOperation)
+	{
+		BOOST_CHECK(car.GetGear() == currentGear);
+		BOOST_CHECK(car.SetGear(expectedGear) == successOperation);
+	}
+
+	void VerifySetSpeed(Gear currentGear, int speed, bool successOperation)
+	{
+		BOOST_CHECK(car.GetGear() == currentGear);
+		BOOST_CHECK(car.SetSpeed(speed) == successOperation);
+	}
 };
 
 BOOST_FIXTURE_TEST_SUITE(Car, CarFixture)
@@ -33,15 +43,12 @@ BOOST_FIXTURE_TEST_SUITE(Car, CarFixture)
 		}
 		BOOST_AUTO_TEST_CASE(cannot_change_gear)
 		{
-			BOOST_CHECK(!car.SetGear(Gear::Reverse));
-			BOOST_CHECK(car.GetGear() == Gear::Neutral);
-			BOOST_CHECK(!car.SetGear(Gear::First));
-			BOOST_CHECK(car.GetGear() == Gear::Neutral);
+			VerifyTurnOnGear(Gear::Neutral, Gear::Reverse, false);
+			VerifyTurnOnGear(Gear::Neutral, Gear::First, false);
 		}
 		BOOST_AUTO_TEST_CASE(cannot_change_speed)
 		{
-			BOOST_CHECK(!car.SetSpeed(10));
-			BOOST_CHECK(car.GetSpeed() == 0);
+			VerifySetSpeed(Gear::Neutral, 10, false);
 		}
 		BOOST_AUTO_TEST_CASE(can_turn_on_engine)
 		{
@@ -54,18 +61,6 @@ BOOST_FIXTURE_TEST_SUITE(Car, CarFixture)
 		when_engine_turned_on_()
 		{
 			car.TurnOnEngine();
-		}
-
-		void VerifyTurnOnGear(Gear currentGear, Gear expectedGear, bool successOperation)
-		{
-			BOOST_CHECK(car.GetGear() == currentGear);
-			BOOST_CHECK(car.SetGear(expectedGear) == successOperation);
-		}
-
-		void VerifySetSpeed(Gear currentGear, int speed, bool successOperation)
-		{
-			BOOST_CHECK(car.GetGear() == currentGear);
-			BOOST_CHECK(car.SetSpeed(speed) == successOperation);
 		}
 	};
 	BOOST_FIXTURE_TEST_SUITE(when_enigne_is_turn_on, when_engine_turned_on_)
@@ -160,7 +155,7 @@ BOOST_FIXTURE_TEST_SUITE(Car, CarFixture)
 			VerifySetSpeed(Gear::Reverse, 10, true);
 			BOOST_CHECK(car.GetDirection() == Direction::Reverse);
 			VerifyTurnOnGear(Gear::Reverse, Gear::Neutral, true);
-			VerifyTurnOnGear(Gear::Neutral, Gear::Reverse, true);
+			VerifyTurnOnGear(Gear::Neutral, Gear::Reverse, false);
 		}
 		BOOST_AUTO_TEST_CASE(cannot_turn_on_first_gear_on_while_moving_reverse)
 		{
