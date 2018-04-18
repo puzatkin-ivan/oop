@@ -5,7 +5,7 @@ std::set<int> GeneratePrimeNumbersSet(int upperBound)
 {
 	if (upperBound < MIN_UPPER_BOUND || upperBound > MAX_UPPER_BOUND)
 	{
-		return std::set<int>();
+		throw std::exception("Invalid upperBound");
 	}
 	auto sieve = InitVectorPrimes(upperBound);
 
@@ -15,6 +15,8 @@ std::set<int> GeneratePrimeNumbersSet(int upperBound)
 std::vector<bool> InitVectorPrimes(int upperBound)
 {
 	std::vector<bool> sieve(upperBound + 1, true);
+	sieve[0] = false;
+	sieve[1] = false;
 	for (size_t i = 2; i * i <= sieve.size(); ++i)
 	{
 		if (sieve[i])
@@ -28,7 +30,7 @@ std::vector<bool> InitVectorPrimes(int upperBound)
 	return sieve;
 }
 
-std::set<int> GeneratePrimeNumbersSetFromVector(const std::vector<bool> & sieve)
+std::set<int> GeneratePrimeNumbersSetFromVector(const std::vector<bool>& sieve)
 {
 	std::set<int> primeNumbers;
 	for (size_t index = 2; index < sieve.size(); ++index)
