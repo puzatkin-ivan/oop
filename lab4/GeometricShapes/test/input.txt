@@ -1,0 +1,4 @@
+linesegment 10 25 12 24 #acacac
+triangle 10 25 12 24 17 42 #acacac #31a2a2
+rectangle 10 25 12 24 #acacac #bacf12
+circle 45 12 12 #aaca12 #aca123
