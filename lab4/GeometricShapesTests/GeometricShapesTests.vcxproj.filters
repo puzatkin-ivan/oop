@@ -48,6 +48,9 @@
     <ClInclude Include="..\GeometricShapes\ISolidShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\GeometricShapes\CShapeController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -87,6 +90,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\GeometricShapes\CRectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CShapeControllerTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GeometricShapes\CShapeController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

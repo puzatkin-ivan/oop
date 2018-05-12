@@ -8,7 +8,7 @@ public:
 	virtual ~CShape() = default;
 
 	std::string GetOutlineColor() const override;
-	void SetOutlineColor(const std::string & outlineColor) override;
+	virtual void SetOutlineColor(const std::string & outlineColor) override;
 private:
 	std::string m_outlineColor;
 };

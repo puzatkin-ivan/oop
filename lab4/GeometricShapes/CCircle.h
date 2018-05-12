@@ -13,8 +13,11 @@ public:
 	double GetArea() const;
 
 	CPoint GetCenter() const;
+	void SetCenter(const CPoint& center);
 	double GetRadius() const;
-
+	void SetRadius(double radius);
+protected:
+	void AppendAdditionalProperties(std::ostream& stream) const override;
 private:
 	CPoint m_center;
 	double m_radius;

@@ -30,6 +30,12 @@ void CShapeController::HandleCommand(std::string command)
 	boost::split(params, command, boost::is_space());
 
 	auto action = m_actionMap.find(params[0]);
+	
+	if (params[0] == "info")
+	{
+		PrintInfo();
+		return;
+	}
 
 	if (action == m_actionMap.end())
 	{
@@ -110,4 +116,40 @@ std::unique_ptr<IShape> CShapeController::CreateRectangle(std::vector<std::strin
 	const auto outlineColor = params[5];
 	const auto fillColor = params[6];
 	return std::make_unique<CRectangle>(leftTopVertex, height, width, outlineColor, fillColor);
+}
+
+void CShapeController::PrintInfo() const
+{
+	if (m_shapes.empty())
+	{
+		std::cout << "Shapes is empty." << std::endl;
+	}
+
+	std::cout << "Info About Shapes:" << std::endl;
+	for (auto& shape : m_shapes)
+	{
+		std::cout << shape->ToString() << std::endl;
+	}
+}
+
+void CShapeController::PrintMinPerimeter() const
+{
+	if (!m_shapes.empty())
+	{
+		auto minPerimeter = std::min_element(m_shapes.begin(), m_shapes.end(), [](const std::unique_ptr<IShape> & lhs, const std::unique_ptr<IShape> & rhs) {
+			return lhs->GetPerimeter() < rhs->GetPerimeter();
+		});
+		std::cout << "Min Perimeter: " << (*minPerimeter)->ToString() << std::endl;
+	}
+}
+
+void CShapeController::PrintMaxArea() const
+{
+	if (!m_shapes.empty())
+	{
+		auto maxArea = std::max_element(m_shapes.begin(), m_shapes.end(), [](const std::unique_ptr<IShape> & lhs, const std::unique_ptr<IShape> & rhs) {
+			return lhs->GetArea() < rhs->GetArea();
+		});
+		std::cout << "Max Area: " << (*maxArea)->ToString() << std::endl;
+	}
 }

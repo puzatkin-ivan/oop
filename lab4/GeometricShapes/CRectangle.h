@@ -12,8 +12,15 @@ public:
 	double GetPerimeter() const override;
 
 	CPoint GetLeftTop() const;
+	void SetLeftTop(const CPoint& leftTop);
+
 	double GetWidth() const;
-	double GetHeight() const;
+	void SetWidth(double width);
+
+	double GetHeight() const; 
+	void SetHeight(double height);
+protected:
+	void AppendAdditionalProperties(std::ostream& stream) const override;
 private:
 	CPoint m_leftTopVertex;
 	double m_height;

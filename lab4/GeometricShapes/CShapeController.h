@@ -2,6 +2,7 @@
 #include <memory>
 #include <map>
 #include <vector>
+#include <algorithm>
 #include <functional>
 #include <iostream>
 #include <fstream>
@@ -20,6 +21,9 @@ public:
 	CShapeController();
 	~CShapeController() = default;
 	void HandleCommand(std::string command);
+	void PrintInfo() const;
+	void PrintMinPerimeter() const;
+	void PrintMaxArea() const;
 	
 private:
 	void AddLineSegment(std::vector<std::string> & params);

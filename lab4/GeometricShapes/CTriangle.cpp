@@ -24,17 +24,39 @@ double CTriangle::GetPerimeter() const
 	return a + b + c;
 }
 
-CPoint const& CTriangle::GetVertex1() const
+CPoint CTriangle::GetVertex1() const
 {
 	return m_vertices[0];
 }
 
-CPoint const& CTriangle::GetVertex2() const
+void CTriangle::SetVertex1(const CPoint& vertex)
+{
+	m_vertices[0] = vertex;
+}
+
+CPoint CTriangle::GetVertex2() const
 {
 	return m_vertices[1];
 }
 
-CPoint const& CTriangle::GetVertex3() const
+void CTriangle::SetVertex2(const CPoint& vertex)
+{
+	m_vertices[1] = vertex;
+}
+
+CPoint CTriangle::GetVertex3() const
 {
 	return m_vertices[2];
+}
+
+void CTriangle::SetVertex3(const CPoint& vertex)
+{
+	m_vertices[2] = vertex;
+}
+
+void CTriangle::AppendAdditionalProperties(std::ostream& stream) const
+{
+	stream << "Vertex1: " << m_vertices[0].x << " " << m_vertices[0].y << std::endl;
+	stream << "Vertex2: " << m_vertices[1].x << " " << m_vertices[1].y << std::endl;
+	stream << "Vertex3: " << m_vertices[2].x << " " << m_vertices[2].y << std::endl;
 }

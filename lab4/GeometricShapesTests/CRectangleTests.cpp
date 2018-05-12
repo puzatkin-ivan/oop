@@ -40,6 +40,9 @@ struct SRectangleFixture
 		stream << "Perimeter: " << GetExpectedPerimeter() << std::endl;
 		stream << "Outline Color: " << OUTLINE_COLOR << std::endl;
 		stream << "Fill Color: " << FILL_COLOR << std::endl;
+		stream << "Left Top Vertex: " << rectangle.GetLeftTop().x << " " << rectangle.GetLeftTop().y << std::endl;
+		stream << "Width: " << rectangle.GetWidth() << std::endl;
+		stream << "Height: " << rectangle.GetHeight() << std::endl;
 		return stream.str();
 	}
 
@@ -48,19 +51,19 @@ struct SRectangleFixture
 		return (lhs.x == lhs.x) && (lhs.y == rhs.y);
 	}
 
-	CRectangle circle;
+	CRectangle rectangle;
 };
 
 BOOST_FIXTURE_TEST_SUITE(Rectangle, SRectangleFixture)
-	BOOST_AUTO_TEST_CASE(has_a_vertex_1)
+	BOOST_AUTO_TEST_CASE(has_a_left_top_vertex)
 	{
 		BOOST_CHECK(VerifyPoints(rectangle.GetLeftTop(), LEFT_TOP_VERTEX));
 	}
-	BOOST_AUTO_TEST_CASE(can_find_perimeter)
+	BOOST_AUTO_TEST_CASE(has_a_perimeter)
 	{
 		BOOST_CHECK(rectangle.GetPerimeter() == GetExpectedPerimeter());
 	}
-	BOOST_AUTO_TEST_CASE(can_find_area)
+	BOOST_AUTO_TEST_CASE(has_an_area)
 	{
 		BOOST_CHECK(rectangle.GetArea() == GetExpectedArea());
 	}
@@ -83,6 +86,21 @@ BOOST_FIXTURE_TEST_SUITE(Rectangle, SRectangleFixture)
 	BOOST_AUTO_TEST_CASE(has_a_string_representation)
 	{
 		BOOST_CHECK(rectangle.ToString() == GetExpectedStringRepresntation());
+	}
+	BOOST_AUTO_TEST_CASE(can_be_change_left_top_vertex)
+	{
+		rectangle.SetLeftTop(CPoint(123, 312));
+		BOOST_CHECK(VerifyPoints(rectangle.GetLeftTop(), CPoint(123, 312)));
+	}
+	BOOST_AUTO_TEST_CASE(can_be_change_width)
+	{
+		rectangle.SetWidth(54);
+		BOOST_CHECK(rectangle.GetWidth() == 54);
+	}
+	BOOST_AUTO_TEST_CASE(can_be_change_height)
+	{
+		rectangle.SetHeight(54);
+		BOOST_CHECK(rectangle.GetHeight() == 54);
 	}
 	BOOST_AUTO_TEST_CASE(can_change_outline_color)
 	{

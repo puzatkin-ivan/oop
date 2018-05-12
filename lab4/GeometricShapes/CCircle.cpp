@@ -23,7 +23,23 @@ CPoint CCircle::GetCenter() const
 	return m_center;
 }
 
+void CCircle::SetCenter(const CPoint& center)
+{
+	m_center = center;
+}
+
 double CCircle::GetRadius() const
 {
 	return m_radius;
+}
+
+void CCircle::SetRadius(double radius)
+{
+	m_radius = radius;
+}
+
+void CCircle::AppendAdditionalProperties(std::ostream& stream) const
+{
+	stream << "Center: " << m_center.x << " " << m_center.y << std::endl;
+	stream << "Radius: " << m_radius << std::endl;
 }

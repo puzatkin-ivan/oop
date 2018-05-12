@@ -6,9 +6,9 @@ namespace
 {
 static const std::array<CPoint, 3> VERTEX = { CPoint(20, 12), CPoint(12, 12), CPoint(12, 45) };
 
-static const std::string OUTLINE_COLOR = "#abc012";
+static const std::string OUTLINE_COLOR = "abc012";
 
-static const std::string FILL_COLOR = "#abc012";
+static const std::string FILL_COLOR = "abc012";
 } // namespace
 
 struct STriangleFixture
@@ -43,6 +43,9 @@ struct STriangleFixture
 		stream << "Perimeter: " << GetExpectedPerimeter() << std::endl;
 		stream << "Outline Color: " << OUTLINE_COLOR << std::endl;
 		stream << "Fill Color: " << FILL_COLOR << std::endl;
+		stream << "Vertex1: " << triangle.GetVertex1().x << " " << triangle.GetVertex1().y << std::endl;
+		stream << "Vertex2: " << triangle.GetVertex2().x << " " << triangle.GetVertex2().y << std::endl;
+		stream << "Vertex3: " << triangle.GetVertex3().x << " " << triangle.GetVertex3().y << std::endl;
 		return stream.str();
 	}
 
@@ -67,15 +70,15 @@ BOOST_FIXTURE_TEST_SUITE(Triangle, STriangleFixture)
 	{
 		BOOST_CHECK(VerifyPoints(triangle.GetVertex3(), VERTEX[2]));
 	}
-	BOOST_AUTO_TEST_CASE(can_find_perimeter)
+	BOOST_AUTO_TEST_CASE(has_a_perimeter)
 	{
 		BOOST_CHECK(triangle.GetPerimeter() == GetExpectedPerimeter());
 	}
-	BOOST_AUTO_TEST_CASE(can_find_area)
+	BOOST_AUTO_TEST_CASE(has_an_area)
 	{
 		BOOST_CHECK(triangle.GetArea() == GetExpectedArea());
 	}
-	BOOST_AUTO_TEST_CASE(has_a_outline_color)
+	BOOST_AUTO_TEST_CASE(has_an_outline_color)
 	{
 		BOOST_CHECK(triangle.GetOutlineColor() == OUTLINE_COLOR);
 	}
@@ -87,13 +90,28 @@ BOOST_FIXTURE_TEST_SUITE(Triangle, STriangleFixture)
 	{
 		BOOST_CHECK(triangle.ToString() == GetExpectedStringRepresntation());
 	}
-	BOOST_AUTO_TEST_CASE(can_change_outline_color)
+	BOOST_AUTO_TEST_CASE(can_be_change_vertex1)
+	{
+		triangle.SetVertex1(CPoint(65, 87));
+		BOOST_CHECK(VerifyPoints(triangle.GetVertex1(), CPoint(65, 87)));
+	}
+	BOOST_AUTO_TEST_CASE(can_be_change_vertex2)
+	{
+		triangle.SetVertex2(CPoint(65, 87));
+		BOOST_CHECK(VerifyPoints(triangle.GetVertex2(), CPoint(65, 87)));
+	}
+	BOOST_AUTO_TEST_CASE(can_be_change_vertex3)
+	{
+		triangle.SetVertex3(CPoint(65, 87));
+		BOOST_CHECK(VerifyPoints(triangle.GetVertex3(), CPoint(65, 87)));
+	}
+	BOOST_AUTO_TEST_CASE(can_be_change_outline_color)
 	{
 		auto newColor = "#123312";
 		triangle.SetOutlineColor(newColor);
 		BOOST_CHECK(triangle.GetOutlineColor() == newColor);
 	}
-	BOOST_AUTO_TEST_CASE(can_change_fill_color)
+	BOOST_AUTO_TEST_CASE(can_be_change_fill_color)
 	{
 		auto newColor = "#123312";
 		triangle.SetFillColor(newColor);

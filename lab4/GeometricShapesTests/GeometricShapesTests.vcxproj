@@ -176,6 +176,7 @@
     <ClInclude Include="..\GeometricShapes\CPoint.h" />
     <ClInclude Include="..\GeometricShapes\CRectangle.h" />
     <ClInclude Include="..\GeometricShapes\CShape.h" />
+    <ClInclude Include="..\GeometricShapes\CShapeController.h" />
     <ClInclude Include="..\GeometricShapes\CSolidShape.h" />
     <ClInclude Include="..\GeometricShapes\CTriangle.h" />
     <ClInclude Include="..\GeometricShapes\IShape.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="..\GeometricShapes\CPoint.cpp" />
     <ClCompile Include="..\GeometricShapes\CRectangle.cpp" />
     <ClCompile Include="..\GeometricShapes\CShape.cpp" />
+    <ClCompile Include="..\GeometricShapes\CShapeController.cpp" />
     <ClCompile Include="..\GeometricShapes\CSolidShape.cpp" />
     <ClCompile Include="..\GeometricShapes\CTriangle.cpp" />
     <ClCompile Include="CCircleTests.cpp" />

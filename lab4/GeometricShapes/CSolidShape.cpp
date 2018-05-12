@@ -4,6 +4,7 @@
 CSolidShape::CSolidShape(const std::string& type, const std::string& outllineColor, const std::string& fillColor)
 	:m_type(type)
 	,m_fillColor(fillColor)
+	,m_outlineColor(outllineColor)
 {
 }
 
@@ -15,6 +16,7 @@ std::string CSolidShape::ToString() const
 	stream << "Perimeter: " << GetPerimeter() << std::endl;
 	stream << "Outline Color: " << GetOutlineColor() << std::endl;
 	stream << "Fill Color: " << GetFillColor() << std::endl;
+	AppendAdditionalProperties(stream);
 	return stream.str();
 }
 

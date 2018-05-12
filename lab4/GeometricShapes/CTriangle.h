@@ -15,10 +15,16 @@ public:
 	double GetArea() const override;
 	double GetPerimeter() const override;
 
-	CPoint const& GetVertex1() const;
-	CPoint const& GetVertex2() const;
-	CPoint const& GetVertex3() const;
+	CPoint GetVertex1() const;
+	void SetVertex1(const CPoint& vertex);
 
+	CPoint GetVertex2() const;
+	void SetVertex2(const CPoint& vertex);
+
+	CPoint GetVertex3() const;
+	void SetVertex3(const CPoint& vertex);
+protected:
+	void AppendAdditionalProperties(std::ostream& stream) const override;
 private:
 	std::array<CPoint, 3> m_vertices;
 };

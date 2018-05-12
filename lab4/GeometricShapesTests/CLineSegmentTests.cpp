@@ -36,6 +36,8 @@ struct CLineSegmentFixture
 		stream << "Area: " << 0.0 << std::endl;
 		stream << "Perimeter: " << GetLengthByPoints(START_POINT, END_POINT) << std::endl;
 		stream << "Outline Color: " << OUTLINE_COLOR << std::endl;
+		stream << "StartPoint: " << START_POINT.x << " " << START_POINT.y << std::endl;
+		stream << "EndPoint: " << END_POINT.x << " " << END_POINT.y << std::endl;
 		return stream.str();
 	}
 
@@ -63,26 +65,26 @@ BOOST_FIXTURE_TEST_SUITE(CLineSegment_, CLineSegmentFixture)
 	{
 		BOOST_CHECK(line.GetOutlineColor() == OUTLINE_COLOR);
 	}
-	BOOST_AUTO_TEST_CASE(change_start_point)
+	BOOST_AUTO_TEST_CASE(has_a_string_representation)
+	{
+		BOOST_CHECK(line.ToString() == GetExpectedStringRepresntation());
+	}
+	BOOST_AUTO_TEST_CASE(can_be_change_start_point)
 	{
 		auto newStartPoint = CPoint(12, 54);
 		line.SetStartPoint(newStartPoint);
 		BOOST_CHECK(VerifyPoints(line.GetStartPoint(), newStartPoint));
 	}
-	BOOST_AUTO_TEST_CASE(change_end_point)
+	BOOST_AUTO_TEST_CASE(can_be_change_end_point)
 	{
 		auto newEndPoint = CPoint(17, 44);
 		line.SetEndPoint(newEndPoint);
 		BOOST_CHECK(VerifyPoints(line.GetEndPoint(), newEndPoint));
 	}
-	BOOST_AUTO_TEST_CASE(change_outline_color)
+	BOOST_AUTO_TEST_CASE(can_be_change_outline_color)
 	{
 		auto newOutlineColor = "#123123";
 		line.SetOutlineColor(newOutlineColor);
 		BOOST_CHECK(line.GetOutlineColor() == newOutlineColor);
-	}
-	BOOST_AUTO_TEST_CASE(has_a_string_representation)
-	{
-		BOOST_CHECK(line.ToString() == GetExpectedStringRepresntation());
 	}
 BOOST_AUTO_TEST_SUITE_END()

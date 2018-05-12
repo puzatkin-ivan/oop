@@ -16,6 +16,8 @@ public:
 	void SetFillColor(const std::string & fillColor) override;
 
 	std::string ToString() const override;
+protected:
+	virtual void AppendAdditionalProperties(std::ostream& stream) const = 0;
 private:
 	std::string m_type;
 	std::string m_fillColor;
