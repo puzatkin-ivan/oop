@@ -2,6 +2,9 @@
 #include "CRational.h"
 #include <iostream>
 
+namespace
+{
+
 unsigned GCD(unsigned a, unsigned b)
 {
 	while (b != 0)
@@ -11,6 +14,8 @@ unsigned GCD(unsigned a, unsigned b)
 	}
 	return (a != 0) ? a : 1;
 }
+
+} // namespace
 
 CRational::CRational(int numerator, int denominator)
 	: m_numerator(numerator)
