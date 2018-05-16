@@ -19,7 +19,10 @@ CHttpUrl::CHttpUrl(const std::string& domain, const std::string& document, Proto
 	,m_protocol(protocol)
 	,m_port(port)
 {
-	ValidateDomain(m_domain);
+	if (ValidateDomain(m_domain))
+	{
+		throw CUrlParsingError("Invalid syntax domain");
+	}
 }
 
 std::string CHttpUrl::GetURL() const
@@ -165,8 +168,7 @@ bool CHttpUrl::ValidateDomain(const std::string& domain)
 
 	auto slash = std::find(domain.begin(), domain.end(), '/');
 	auto space = std::find(domain.begin(), domain.end(), ' ');
-	auto ReserseSlash= std::find(domain.begin(), domain.end(), ' ');
-	if (slash != domain.end() || space != domain.end() || ReserseSlash != domain.end())
+	if (slash != domain.end() || space != domain.end())
 	{
 		return false;
 	}

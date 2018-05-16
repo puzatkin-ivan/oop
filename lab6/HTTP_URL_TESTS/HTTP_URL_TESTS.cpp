@@ -4,7 +4,8 @@
 BOOST_AUTO_TEST_SUITE(CHttpURL)
 	BOOST_AUTO_TEST_CASE(initialization)
 	{
-		BOOST_CHECK_THROW(CHttpUrl("www.google.net", "/search/image.png", Protocol::HTTPS, 15), CUrlParsingError);
+		BOOST_CHECK_THROW(CHttpUrl("www.google.	net", "/search/image.png", Protocol::HTTPS, 15), CUrlParsingError);
+		BOOST_CHECK_THROW(CHttpUrl("www.google.net", "/sear ch/image.png", Protocol::HTTPS, 15), CUrlParsingError);
 		BOOST_CHECK_THROW(CHttpUrl("ws://domain.net/document"), CUrlParsingError);
 		BOOST_CHECK_THROW(CHttpUrl("http://domain.net/docum ent"), CUrlParsingError);
 	}
