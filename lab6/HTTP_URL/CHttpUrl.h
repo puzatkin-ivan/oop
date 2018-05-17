@@ -33,6 +33,8 @@ private:
 
 	static bool ValidateProtocol(const std::string& protocol);
 	static bool ValidateDomain(const std::string& domain);
+	static bool ValidatePort(int port);
+	static bool ValidateDocument(const std::string& document);
 
 	std::string ToStringProtocol() const;
 

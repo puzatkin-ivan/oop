@@ -4,14 +4,16 @@
 BOOST_AUTO_TEST_SUITE(CHttpURL)
 	BOOST_AUTO_TEST_CASE(initialization)
 	{
-		BOOST_CHECK_THROW(CHttpUrl("www.google.	net", "/search/image.png", Protocol::HTTPS, 15), CUrlParsingError);
+		BOOST_CHECK_THROW(CHttpUrl("www.google. net", "/search/image.png", Protocol::HTTPS, 15), CUrlParsingError);
 		BOOST_CHECK_THROW(CHttpUrl("www.google.net", "/sear ch/image.png", Protocol::HTTPS, 15), CUrlParsingError);
+		BOOST_CHECK_THROW(CHttpUrl("", "/sear ch/image.png", Protocol::HTTPS, 15), CUrlParsingError);
 		BOOST_CHECK_THROW(CHttpUrl("ws://domain.net/document"), CUrlParsingError);
 		BOOST_CHECK_THROW(CHttpUrl("http://domain.net/docum ent"), CUrlParsingError);
 	}
 	BOOST_AUTO_TEST_SUITE(parse_url)
 		BOOST_AUTO_TEST_CASE(parse_protocol)
 		{
+			BOOST_CHECK_THROW(CHttpUrl("error"), CUrlParsingError);
 			BOOST_CHECK_THROW(CHttpUrl("nohttp://domain.net/document"), CUrlParsingError);
 			BOOST_CHECK_THROW(CHttpUrl("ters://domain.net/document"), CUrlParsingError);
 			CHttpUrl httpUrl("http://domain.net/document");
@@ -32,7 +34,7 @@ BOOST_AUTO_TEST_SUITE(CHttpURL)
 			BOOST_CHECK_THROW(CHttpUrl("https://domain.net: "), CUrlParsingError);
 			BOOST_CHECK_THROW(CHttpUrl("https://domain.net:0/"), CUrlParsingError);
 			BOOST_CHECK_THROW(CHttpUrl("https://domain.net:-8/"), CUrlParsingError);
-			BOOST_CHECK_THROW(CHttpUrl("https://domain.net:65536"), CUrlParsingError);
+			BOOST_CHECK_THROW(CHttpUrl("https://domain.net:65536/"), CUrlParsingError);
 
 			CHttpUrl httpsUrl("https://google.com/");
 			BOOST_CHECK((int)httpsUrl.GetPort() == 443);
@@ -53,6 +55,20 @@ BOOST_AUTO_TEST_SUITE(CHttpURL)
 
 			CHttpUrl httpUrl("https://google.com/search/dictonary.php");
 			BOOST_CHECK(httpUrl.GetDocument() == "/search/dictonary.php");
+		}
+		BOOST_AUTO_TEST_CASE(print_url)
+		{
+			CHttpUrl url("www.google.net", "/search/image.png", Protocol::HTTPS, 15);
+			std::string urlToString = "https://www.google.net:15/search/image.png";
+			BOOST_CHECK(url.GetURL() == urlToString);
+
+			CHttpUrl url2("www.google.net", "/search/image.png", Protocol::HTTP);
+			urlToString = "http://www.google.net/search/image.png";
+			BOOST_CHECK(url2.GetURL() == urlToString);
+
+			CHttpUrl url3("www.google.net", "/search/image.png", Protocol::HTTP, 443);
+			urlToString = "http://www.google.net:443/search/image.png";
+			BOOST_CHECK(url3.GetURL() == urlToString);
 		}
 	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

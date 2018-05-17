@@ -9,11 +9,16 @@ bool HighestPlayer(const std::vector<Sportsman>& team, Sportsman& sporstsman)
 	});
 }
 
-bool MostWeightytPlayer(const std::vector<Sportsman>& team, Sportsman& sporstsman)
+bool HeaviestPlayer(const std::vector<Sportsman>& team, Sportsman& sporstsman)
 {
 	return FindMaxEx(team, sporstsman, [](const auto& lhs, const auto& rhs) {
 		return lhs.weight < rhs.weight;
 	});
+}
+
+bool VerifyPlayers(const Sportsman& lhs, const Sportsman& rhs)
+{
+	return (lhs.name == rhs.name) && (lhs.weight == rhs.weight) && (lhs.height == rhs.height);
 }
 
 struct Team
@@ -49,14 +54,18 @@ BOOST_FIXTURE_TEST_SUITE(Find_Max_Ex, Team)
 		BOOST_AUTO_TEST_CASE(the_higest_football_player_of_the_Russian_national_team)
 		{
 			Sportsman player;
+			Sportsman player2;
 			BOOST_CHECK(HighestPlayer(team, player));
+			BOOST_CHECK(FindMaxEx(team, player2));
+			BOOST_CHECK(VerifyPlayers(player, player2));
 			BOOST_CHECK(player.name == "Aleksandr Yerokhin");
 		}
-		BOOST_AUTO_TEST_CASE(the_most_weightly_football_player_of_the_Russian_national_team)
+		BOOST_AUTO_TEST_CASE(the_heaviest_football_player_of_the_Russian_national_team)
 		{
 			Sportsman player;
-			BOOST_CHECK(MostWeightytPlayer(team, player));
+			BOOST_CHECK(HeaviestPlayer(team, player));
 			BOOST_CHECK(player.name == "Artem Dzyuba");
 		}
+
 	BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE_END()

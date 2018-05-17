@@ -19,7 +19,7 @@ CHttpUrl::CHttpUrl(const std::string& domain, const std::string& document, Proto
 	,m_protocol(protocol)
 	,m_port(port)
 {
-	if (ValidateDomain(m_domain))
+	if (!ValidateDomain(m_domain) || !ValidatePort(m_port) || !ValidateDocument(m_document))
 	{
 		throw CUrlParsingError("Invalid syntax domain");
 	}
@@ -29,7 +29,7 @@ std::string CHttpUrl::GetURL() const
 {
 	auto url = ToStringProtocol() + "://" + m_domain;
 
-	if ((m_port != 80) || (m_port != 443))
+	if ((m_port != 80 && m_protocol == Protocol::HTTP) || (m_port != 443 && m_protocol == Protocol::HTTPS))
 	{
 		url += ":" + std::to_string(m_port);
 	}
@@ -128,7 +128,7 @@ unsigned short CHttpUrl::ParsePort(const std::string& url)
 	}
 	auto portStr = url.substr(1, endPos);
 	int port = std::stoi(portStr);
-	if (port < 1 || port > 65535 || portStr.find(' ') != std::string::npos)
+	if (!ValidatePort(port) || portStr.find(' ') != std::string::npos)
 	{
 		throw CUrlParsingError("Port parsing error.");
 	}
@@ -146,8 +146,7 @@ std::string CHttpUrl::ParseDocument(const std::string& url)
 		document = document.substr(0, endPos);
 	}
 
-	auto spacePos = url.find(' ');
-	if (spacePos != std::string::npos)
+	if (!ValidateDocument(document))
 	{
 		throw CUrlParsingError("Invalid syntax document");
 	}
@@ -173,6 +172,17 @@ bool CHttpUrl::ValidateDomain(const std::string& domain)
 		return false;
 	}
 	return true;
+}
+
+bool CHttpUrl::ValidatePort(int port)
+{
+	return (port >= 1 && port <= 65535);
+}
+
+bool CHttpUrl::ValidateDocument(const std::string& document)
+{
+	auto spacePos = document.find(' ');
+	return spacePos == std::string::npos;
 }
 
 std::string CHttpUrl::ToStringProtocol()const
