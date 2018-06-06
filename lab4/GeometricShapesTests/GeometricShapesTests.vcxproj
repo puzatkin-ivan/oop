@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\GeometricShapes\CCircle.h" />
+    <ClInclude Include="..\GeometricShapes\CCommands.h" />
     <ClInclude Include="..\GeometricShapes\CLineSegment.h" />
     <ClInclude Include="..\GeometricShapes\CPoint.h" />
     <ClInclude Include="..\GeometricShapes\CRectangle.h" />
@@ -186,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\GeometricShapes\CCircle.cpp" />
+    <ClCompile Include="..\GeometricShapes\CCommands.cpp" />
     <ClCompile Include="..\GeometricShapes\CLineSegment.cpp" />
     <ClCompile Include="..\GeometricShapes\CPoint.cpp" />
     <ClCompile Include="..\GeometricShapes\CRectangle.cpp" />

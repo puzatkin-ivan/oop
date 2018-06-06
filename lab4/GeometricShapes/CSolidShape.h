@@ -3,7 +3,7 @@
 #include "ISolidShape.h"
 #include "CShape.h"
 
-class CSolidShape : public ISolidShape
+class CSolidShape : virtual public ISolidShape
 {
 public:
 	CSolidShape(const std::string & type, const std::string & outllineColor, const std::string & fillColor);

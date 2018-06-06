@@ -6,10 +6,3 @@ CPoint::CPoint(double x, double y)
 	,y(y)
 {
 }
-
-std::istream& operator >> (std::istream &strm, CPoint & point)
-{
-	strm >> point.x;
-	strm >> point.y;
-	return strm;
-}

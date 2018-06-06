@@ -1,7 +1,7 @@
 #pragma once
 #include "IShape.h"
 
-class CShape : public IShape
+class CShape : virtual public IShape
 {
 public:
 	CShape() = default;
