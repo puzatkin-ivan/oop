@@ -6,7 +6,6 @@
 class CLineSegment : public CShape
 {
 public:
-	CLineSegment() = delete;
 	CLineSegment(const CPoint & startPoint, const CPoint & endPoint, const std::string & outlineColor);
 
 	double GetArea() const override;

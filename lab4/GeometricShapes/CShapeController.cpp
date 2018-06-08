@@ -3,14 +3,10 @@
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/algorithm/string.hpp>
 
-CShapeController::CShapeController(std::ostream& output)
+CShapeController::CShapeController(std::vector<std::unique_ptr<IShape>>& shapes, std::ostream& output)
 	:m_output(output)
+	,m_shapes(shapes)
 {
-	AddItem("linesegment", std::make_unique<CAddLineSegmentCommand>(m_shapes));
-	AddItem("circle", std::make_unique<CAddCircleCommand>(m_shapes));
-	AddItem("rectangle", std::make_unique<CAddRectangleCommand>(m_shapes));
-	AddItem("triangle", std::make_unique<CAddTriangleCommand>(m_shapes));
-	AddItem("info", std::make_unique<CPrintMinPerimeterCommand>(m_shapes, m_output));
 }
 
 void CShapeController::Run(std::istream& stream)

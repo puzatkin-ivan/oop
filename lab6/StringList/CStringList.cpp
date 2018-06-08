@@ -148,8 +148,8 @@ void CStringList::Insert(const CIterator & it, const std::string & data)
 	}
 	else
 	{
-		auto node = std::make_unique<SNode>(data, it->prev, move(it->prev->next));
-		it->prev = std::move(node.get());
+		auto node = std::make_unique<SNode>(data, it->prev, std::move(it->prev->next));
+		it->prev = node.get();
 		node->prev->next = std::move(node);
 		++m_size;
 	}

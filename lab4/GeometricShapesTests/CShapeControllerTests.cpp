@@ -5,8 +5,13 @@
 struct CShapeControllerFixture_
 {
 	CShapeControllerFixture_()
-		: controller(ostream)
+		: controller(shape, ostream)
 	{
+		controller.AddItem("linesegment", std::make_unique<CAddLineSegmentCommand>(shape));
+		controller.AddItem("circle", std::make_unique<CAddCircleCommand>(shape));
+		controller.AddItem("rectangle", std::make_unique<CAddRectangleCommand>(shape));
+		controller.AddItem("triangle", std::make_unique<CAddTriangleCommand>(shape));
+		controller.AddItem("info", std::make_unique<CPrintMinPerimeterCommand>(shape, ostream));
 	}
 	std::stringstream ostream;
 	CShapeController controller;
