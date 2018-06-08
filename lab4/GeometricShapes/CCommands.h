@@ -8,39 +8,44 @@
 #include "CTriangle.h"
 #include "CCircle.h"
 
+class CCreateShapeCommand : virtual public ICreateShapeCommand
+{
+protected:
+	std::vector<std::string> GetParams(std::istream& input) override;
+};
 
-class CAddLineSegmentCommand : public ICommand
+class CAddLineSegmentCommand : public CCreateShapeCommand
 {
 public:
 	CAddLineSegmentCommand(std::vector<std::unique_ptr<IShape>>& shapes);
-	void Execute(const std::vector<std::string>& params) override;
+	void Execute(std::istream& input) override;
 private:
 	std::vector<std::unique_ptr<IShape>>& m_shapes;
 };
 
-class CAddCircleCommand : public ICommand
+class CAddCircleCommand : public CCreateShapeCommand
 {
 public:
 	CAddCircleCommand(std::vector<std::unique_ptr<IShape>>& shapes);
-	void Execute(const std::vector<std::string>& params) override;
+	void Execute(std::istream& input) override;
 private:
 	std::vector<std::unique_ptr<IShape>>& m_shapes;
 };
 
-class CAddRectangleCommand : public ICommand
+class CAddRectangleCommand : public CCreateShapeCommand
 {
 public:
 	CAddRectangleCommand(std::vector<std::unique_ptr<IShape>>& shapes);
-	void Execute(const std::vector<std::string>& params) override;
+	void Execute(std::istream& input) override;
 private:
 	std::vector<std::unique_ptr<IShape>>& m_shapes;
 };
 
-class CAddTriangleCommand : public ICommand
+class CAddTriangleCommand : public CCreateShapeCommand
 {
 public:
 	CAddTriangleCommand(std::vector<std::unique_ptr<IShape>>& shapes);
-	void Execute(const std::vector<std::string>& params) override;
+	void Execute(std::istream& input) override;
 private:
 	std::vector<std::unique_ptr<IShape>>& m_shapes;
 };
@@ -48,26 +53,29 @@ private:
 class CPrintInfoCommand : public ICommand
 {
 public:
-	CPrintInfoCommand(std::vector<std::unique_ptr<IShape>>& shapes);
-	void Execute(const std::vector<std::string>& params) override;
+	CPrintInfoCommand(std::vector<std::unique_ptr<IShape>>& shapes, std::ostream& output);
+	void Execute(std::istream& input) override;
 private:
 	std::vector<std::unique_ptr<IShape>>& m_shapes;
+	std::ostream& m_output;
 };
 
 class CPrintMinPerimeterCommand : public ICommand
 {
 public:
-	CPrintMinPerimeterCommand(std::vector<std::unique_ptr<IShape>>& shapes);
-	void Execute(const std::vector<std::string>& params) override;
+	CPrintMinPerimeterCommand(std::vector<std::unique_ptr<IShape>>& shapes, std::ostream& output);
+	void Execute(std::istream& input) override;
 private:
 	std::vector<std::unique_ptr<IShape>>& m_shapes;
+	std::ostream& m_output;
 };
 
 class CPrintMaxAreaCommand : public ICommand
 {
 public:
-	CPrintMaxAreaCommand(std::vector<std::unique_ptr<IShape>>& shapes);
-	void Execute(const std::vector<std::string>& params) override;
+	CPrintMaxAreaCommand(std::vector<std::unique_ptr<IShape>>& shapes, std::ostream& output);
+	void Execute(std::istream& input) override;
 private:
 	std::vector<std::unique_ptr<IShape>>& m_shapes;
+	std::ostream& m_output;
 };

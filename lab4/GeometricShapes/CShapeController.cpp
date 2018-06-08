@@ -3,44 +3,43 @@
 #include <boost/range/algorithm/find_if.hpp>
 #include <boost/algorithm/string.hpp>
 
-CShapeController::CShapeController()
+CShapeController::CShapeController(std::ostream& output)
+	:m_output(output)
 {
-	AddItem("line segment", std::make_unique<CAddLineSegmentCommand>(m_shapes));
-	AddItem("cicrle", std::make_unique<CAddCircleCommand>(m_shapes));
+	AddItem("linesegment", std::make_unique<CAddLineSegmentCommand>(m_shapes));
+	AddItem("circle", std::make_unique<CAddCircleCommand>(m_shapes));
 	AddItem("rectangle", std::make_unique<CAddRectangleCommand>(m_shapes));
 	AddItem("triangle", std::make_unique<CAddTriangleCommand>(m_shapes));
-	AddItem("info", std::make_unique<CPrintInfoCommand>(m_shapes));
-	AddItem("min perimeter", std::make_unique<CPrintMinPerimeterCommand>(m_shapes));
-	AddItem("max area", std::make_unique<CPrintMaxAreaCommand>(m_shapes));
+	AddItem("info", std::make_unique<CPrintMinPerimeterCommand>(m_shapes, m_output));
 }
 
 void CShapeController::Run(std::istream& stream)
 {
 	std::string command;
 	while (std::getline(stream, command))
-	{
-		boost::to_lower(command);
-		std::vector<std::string> params;
-		boost::split(params, command, boost::is_space());
-
+	{		
+		std::string name;
+		std::stringstream iss(command);
+		iss >> name;
+		
 		auto action = boost::find_if(m_actionMap, [&](const Item & item) {
-			return item.shortcut == command;
+			return item.shortcut == name;
 		});
 
 		if (action == boost::end(m_actionMap))
 		{
 			throw std::invalid_argument("Error: Unknown command");
 		}
-		action->command->Execute(params);
+		std::stringstream input(command);
+		action->command->Execute(input);
 
-		auto minPerimeter = boost::find_if(m_actionMap, [&](const Item & item) {
-			return item.shortcut == "min perimeter";
-		});
-		minPerimeter->command->Execute(params);
+		if (!m_shapes.empty())
+		{
+			auto printMinPerimeter = std::make_unique<CPrintMinPerimeterCommand>(m_shapes, m_output);
+			printMinPerimeter->Execute(input);
 
-		auto maxArea = boost::find_if(m_actionMap, [&](const Item & item) {
-			return item.shortcut == "max area";
-		});
-		maxArea->command->Execute(params);
+			auto printMaxArea = std::make_unique<CPrintMaxAreaCommand>(m_shapes, m_output);
+			printMaxArea->Execute(input);
+		}
 	}
 }

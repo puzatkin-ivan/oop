@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CCommands.h"
+#include <boost/algorithm/string.hpp>
 
 namespace
 {
@@ -10,6 +11,19 @@ static const size_t COUNT_PARAMETERS_FOR_CIRCLE = 6;
 static const size_t COUNT_PARAMETERS_FOR_TRIANGLE = 9;
 
 static const size_t COUNT_PARAMETERS_FOR_RECTANGLE = 7;
+} // namespace
+
+std::vector<std::string> CCreateShapeCommand::GetParams(std::istream& input)
+{
+	std::string command;
+	if (!std::getline(input, command))
+	{
+		throw std::invalid_argument("Input file is empty.");
+	}
+	boost::to_lower(command);
+	std::vector<std::string> params;
+	boost::split(params, command, boost::is_space());
+	return params;
 }
 
 CAddLineSegmentCommand::CAddLineSegmentCommand(std::vector<std::unique_ptr<IShape>>& shapes)
@@ -17,8 +31,9 @@ CAddLineSegmentCommand::CAddLineSegmentCommand(std::vector<std::unique_ptr<IShap
 {
 }
 
-void CAddLineSegmentCommand::Execute(const std::vector<std::string>& params)
+void CAddLineSegmentCommand::Execute(std::istream& input)
 {
+	auto params = GetParams(input);
 	if (params.size() != COUNT_PARAMETERS_FOR_LINE_SEGMENT)
 	{
 		throw std::invalid_argument("Error: Invalid count argument for linesegment");
@@ -35,8 +50,9 @@ CAddCircleCommand::CAddCircleCommand(std::vector<std::unique_ptr<IShape>>& shape
 {
 }
 
-void CAddCircleCommand::Execute(const std::vector<std::string>& params)
+void CAddCircleCommand::Execute(std::istream& input)
 {
+	auto params = GetParams(input);
 	if (params.size() != COUNT_PARAMETERS_FOR_CIRCLE)
 	{
 		throw std::invalid_argument("Error: Invalid count argument for circle");
@@ -54,11 +70,32 @@ CAddRectangleCommand::CAddRectangleCommand(std::vector<std::unique_ptr<IShape>>&
 {
 }
 
-void CAddRectangleCommand::Execute(const std::vector<std::string>& params)
+void CAddRectangleCommand::Execute(std::istream& input)
 {
+	auto params = GetParams(input);
+	if (params.size() != COUNT_PARAMETERS_FOR_RECTANGLE)
+	{
+		throw std::invalid_argument("Error: Invalid count argument for rectangle");
+	}
+	CPoint leftTopVertex(std::stod(params[1]), std::stod(params[2]));
+	const auto height = std::stod(params[3]);
+	const auto width = std::stod(params[4]);
+	const auto outlineColor = params[5];
+	const auto fillColor = params[6];
+	m_shapes.push_back(std::make_unique<CRectangle>(leftTopVertex, height, width, outlineColor, fillColor));
+}
+
+CAddTriangleCommand::CAddTriangleCommand(std::vector<std::unique_ptr<IShape>>& shapes)
+	: m_shapes(shapes)
+{
+}
+
+void CAddTriangleCommand::Execute(std::istream& input)
+{
+	auto params = GetParams(input);
 	if (params.size() != COUNT_PARAMETERS_FOR_TRIANGLE)
 	{
-		throw std::invalid_argument("Error: Invalid count argument for triangle");
+		throw std::invalid_argument("Error: Invalid count argument for rectangle");
 	}
 	CPoint vertex1(std::stod(params[1]), std::stod(params[2]));
 	CPoint vertex2(std::stod(params[3]), std::stod(params[4]));
@@ -69,76 +106,64 @@ void CAddRectangleCommand::Execute(const std::vector<std::string>& params)
 	m_shapes.push_back(std::make_unique<CTriangle>(vertex1, vertex2, vertex3, outlineColor, fillColor));
 }
 
-CAddTriangleCommand::CAddTriangleCommand(std::vector<std::unique_ptr<IShape>>& shapes)
-	: m_shapes(shapes)
+CPrintInfoCommand::CPrintInfoCommand(std::vector<std::unique_ptr<IShape>>& shapes, std::ostream& output)
+	:m_shapes(shapes)
+	,m_output(output)
 {
 }
 
-void CAddTriangleCommand::Execute(const std::vector<std::string>& params)
+void CPrintInfoCommand::Execute(std::istream& input)
 {
-	if (params.size() != COUNT_PARAMETERS_FOR_RECTANGLE)
-	{
-		throw std::invalid_argument("Error: Invalid count argument for rectangle");
-	}
-	CPoint leftTopVertex(std::stod(params[1]), std::stod(params[2]));
-	const auto height = std::stod(params[3]);
-	const auto width = std::stod(params[4]);
-	const auto outlineColor = params[5];
-	const auto fillColor = params[6];
-
-	m_shapes.push_back(std::make_unique<CRectangle>(leftTopVertex, height, width, outlineColor, fillColor));
-}
-
-CPrintInfoCommand::CPrintInfoCommand(std::vector<std::unique_ptr<IShape>>& shapes)
-	: m_shapes(shapes)
-{
-}
-
-void CPrintInfoCommand::Execute(const std::vector<std::string>& params)
-{
-	(void)&params;
+	(void)&input;
 	if (m_shapes.empty())
 	{
-		std::cout << "Shapes is empty." << std::endl;
+		m_output << "Shapes is empty." << std::endl;
+		return;
 	}
 
-	std::cout << "Info About Shapes:" << std::endl;
+	m_output << "Info About Shapes:" << std::endl;
 	for (auto& shape : m_shapes)
 	{
-		std::cout << shape->ToString() << std::endl;
+		m_output << shape->ToString() << std::endl;
 	}
 }
 
-CPrintMinPerimeterCommand::CPrintMinPerimeterCommand(std::vector<std::unique_ptr<IShape>>& shapes)
+CPrintMinPerimeterCommand::CPrintMinPerimeterCommand(std::vector<std::unique_ptr<IShape>>& shapes, std::ostream& output)
 	: m_shapes(shapes)
+	, m_output(output)
 {
 }
 
-void CPrintMinPerimeterCommand::Execute(const std::vector<std::string>& params)
+void CPrintMinPerimeterCommand::Execute(std::istream& input)
 {
-	(void)&params;
-	if (!m_shapes.empty())
+	(void)&input;
+	if (m_shapes.empty())
 	{
-		auto minPerimeter = std::min_element(m_shapes.begin(), m_shapes.end(), [](const auto& lhs, const auto& rhs) {
-			return lhs->GetPerimeter() < rhs->GetPerimeter();
-		});
-		std::cout << "Min Perimeter: " << (*minPerimeter)->ToString() << std::endl;
+		m_output << "Shapes is empty." << std::endl;
+		return;
 	}
+	auto minPerimeter = std::min_element(m_shapes.begin(), m_shapes.end(), [](const auto& lhs, const auto& rhs) {
+		return lhs->GetPerimeter() < rhs->GetPerimeter();
+	});
+	m_output << "Minimum perimeter of the shape:" << std::endl << (*minPerimeter)->ToString() << std::endl;
 }
 
-CPrintMaxAreaCommand::CPrintMaxAreaCommand(std::vector<std::unique_ptr<IShape>>& shapes)
+CPrintMaxAreaCommand::CPrintMaxAreaCommand(std::vector<std::unique_ptr<IShape>>& shapes, std::ostream& output)
 	: m_shapes(shapes)
+	, m_output(output)
 {
 }
 
-void CPrintMaxAreaCommand::Execute(const std::vector<std::string>& params)
+void CPrintMaxAreaCommand::Execute(std::istream& input)
 {
-	(void)&params;
-	if (!m_shapes.empty())
+	(void)&input;
+	if (m_shapes.empty())
 	{
-		auto maxArea = std::max_element(m_shapes.begin(), m_shapes.end(), [](const auto& lhs, const auto& rhs) {
-			return lhs->GetArea() < rhs->GetArea();
-		});
-		std::cout << "Max Area: " << (*maxArea)->ToString() << std::endl;
+		m_output << "Shapes is empty." << std::endl;
+		return;
 	}
+	auto maxArea = std::max_element(m_shapes.begin(), m_shapes.end(), [](const auto& lhs, const auto& rhs) {
+		return lhs->GetArea() < rhs->GetArea();
+	});
+	m_output << "Maximum area of the shape:" << std::endl << (*maxArea)->ToString() << std::endl;
 }

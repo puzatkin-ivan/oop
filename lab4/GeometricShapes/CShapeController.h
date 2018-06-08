@@ -16,7 +16,7 @@
 class CShapeController
 {
 public:
-	CShapeController();
+	CShapeController(std::ostream& output);
 	~CShapeController() = default;
 	void Run(std::istream& stream);
 private:
@@ -39,4 +39,5 @@ private:
 	using ActionMap = std::vector<Item>;
 	ActionMap m_actionMap;
 	std::vector<std::unique_ptr<IShape>> m_shapes;
+	std::ostream& m_output;
 };
