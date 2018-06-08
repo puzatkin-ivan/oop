@@ -11,9 +11,8 @@ static const size_t COUNT_PARAMETERS_FOR_CIRCLE = 6;
 static const size_t COUNT_PARAMETERS_FOR_TRIANGLE = 9;
 
 static const size_t COUNT_PARAMETERS_FOR_RECTANGLE = 7;
-} // namespace
 
-std::vector<std::string> CCreateShapeCommand::GetParams(std::istream& input)
+std::vector<std::string> GetParams(std::istream& input)
 {
 	std::string command;
 	if (!std::getline(input, command))
@@ -25,6 +24,8 @@ std::vector<std::string> CCreateShapeCommand::GetParams(std::istream& input)
 	boost::split(params, command, boost::is_space());
 	return params;
 }
+
+} // namespace
 
 CAddLineSegmentCommand::CAddLineSegmentCommand(std::vector<std::unique_ptr<IShape>>& shapes)
 	: m_shapes(shapes)
